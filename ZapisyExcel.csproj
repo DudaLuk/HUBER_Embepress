@@ -33,11 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.Contrib.2.0.30\lib\net461\Dapper.Contrib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <HintPath>packages\DataConnectionDialog.1.2\Lib\Microsoft.Data.ConnectionUI.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI.Dialog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <HintPath>packages\DataConnectionDialog.1.2\Lib\Microsoft.Data.ConnectionUI.Dialog.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,14 +62,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="POCO\FKzapisy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -75,6 +84,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Row.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
