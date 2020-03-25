@@ -34,7 +34,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
-            this.rowBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.okresDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kontoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.typdokumentuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,7 +66,7 @@
             this.stronaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kwotaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pozycjaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.knazwaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rowBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rowBindingSource)).BeginInit();
@@ -118,8 +117,7 @@
             this.poz5DataGridViewTextBoxColumn,
             this.stronaDataGridViewTextBoxColumn,
             this.kwotaDataGridViewTextBoxColumn,
-            this.pozycjaDataGridViewTextBoxColumn,
-            this.knazwaDataGridViewTextBoxColumn});
+            this.pozycjaDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.rowBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(269, 0);
@@ -155,10 +153,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Export Excel";
             this.button2.UseVisualStyleBackColor = true;
-            // 
-            // rowBindingSource
-            // 
-            this.rowBindingSource.DataSource = typeof(ZapisyExcel.Row);
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // okresDataGridViewTextBoxColumn
             // 
@@ -384,12 +379,9 @@
             this.pozycjaDataGridViewTextBoxColumn.Name = "pozycjaDataGridViewTextBoxColumn";
             this.pozycjaDataGridViewTextBoxColumn.Visible = false;
             // 
-            // knazwaDataGridViewTextBoxColumn
+            // rowBindingSource
             // 
-            this.knazwaDataGridViewTextBoxColumn.DataPropertyName = "Knazwa";
-            this.knazwaDataGridViewTextBoxColumn.HeaderText = "Knazwa";
-            this.knazwaDataGridViewTextBoxColumn.Name = "knazwaDataGridViewTextBoxColumn";
-            this.knazwaDataGridViewTextBoxColumn.Visible = false;
+            this.rowBindingSource.DataSource = typeof(ZapisyExcel.Row);
             // 
             // Form1
             // 
@@ -447,7 +439,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stronaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn kwotaDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn pozycjaDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn knazwaDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource rowBindingSource;
     }
 }
