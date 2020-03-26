@@ -86,7 +86,8 @@ namespace ZapisyExcel
                 $"	from fk.dokumenty d " +
                 $"left join fk.zapisy z on z.dokument=d.id " +
                 $"left join fk.fk_kontrahenci k on k.pozycja=d.kontrahentStalyId " +
-                $"where datadok>='{monthCalendar1.SelectionStart}' and datadok<='{monthCalendar1.SelectionEnd}'");
+                $"where datadok>='{monthCalendar1.SelectionStart}' and datadok<='{monthCalendar1.SelectionEnd}' " +
+                $"order by d.datadok ,d.numer, z.idDlaRozliczen ");
 
            
 
@@ -108,6 +109,9 @@ namespace ZapisyExcel
             }
             //todo: poprawic zapisywanie pliku
             var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.DefaultExt = "csv";
             if (saveFileDialog.ShowDialog()==DialogResult.OK)
             {
                 File.WriteAllText(saveFileDialog.FileName,sb.ToString(),Encoding.Default);
