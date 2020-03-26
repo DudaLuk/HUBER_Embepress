@@ -31,7 +31,11 @@ namespace ZapisyExcel
         {
             ConnectionGet();
             //dataGridView1.DataSource= sqlConnection.GetAll<FKzapisy>();
-           
+            if (DateTime.Now>new DateTime(2020,4,1))
+            {
+                MessageBox.Show("brak licencji na ten raport");
+                Close();
+            }
         }
 
         private void ConnectionGet()
@@ -86,7 +90,7 @@ namespace ZapisyExcel
                 $"	from fk.dokumenty d " +
                 $"left join fk.zapisy z on z.dokument=d.id " +
                 $"left join fk.fk_kontrahenci k on k.pozycja=d.kontrahentStalyId " +
-                $"where datadok>='{monthCalendar1.SelectionStart}' and datadok<='{monthCalendar1.SelectionEnd}' " +
+                $"where datadok>='{monthCalendar1.SelectionStart.ToString("s")}' and datadok<='{monthCalendar1.SelectionEnd.ToString("s")}' " +
                 $"order by d.datadok ,d.numer, z.idDlaRozliczen ");
 
            
