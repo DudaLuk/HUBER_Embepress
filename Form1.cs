@@ -31,11 +31,11 @@ namespace ZapisyExcel
         {
             ConnectionGet();
             //dataGridView1.DataSource= sqlConnection.GetAll<FKzapisy>();
-            if (DateTime.Now>new DateTime(2020,4,1))
-            {
-                MessageBox.Show("brak licencji na ten raport");
-                Close();
-            }
+            //if (DateTime.Now>new DateTime(2020,4,1))
+            //{
+            //    MessageBox.Show("brak licencji na ten raport");
+            //    Close();
+            //}
         }
 
         private void ConnectionGet()
