@@ -109,7 +109,8 @@ namespace ZapisyExcel
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 var cells = row.Cells.Cast<DataGridViewCell>();
-                sb.AppendLine(string.Join(";", cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
+                //sb.AppendLine(string.Join(";", cells.Select(cell => cell.OwningColumn.DataPropertyName!="Konto"?"\"" + cell.Value + "\"":"'"+cell.Value).ToArray()));
+                sb.AppendLine(string.Join(";", cells.Select(cell => "=\"" + cell.Value + "\"").ToArray()));
             }
             //todo: poprawic zapisywanie pliku
             var saveFileDialog = new SaveFileDialog();
