@@ -88,10 +88,12 @@ namespace ZapisyExcel
                 $"	d.sygnatura," +
                 $"  d.numerKsiegowania  " +
                 $"	from fk.dokumenty d " +
-                $"left join fk.zapisy z on z.dokument=d.id " +
+                $"left join fk.zapisy z on z.dokument=d.id and z.rokId=d.rokId " +
                 $"left join fk.fk_kontrahenci k on k.pozycja=d.kontrahentStalyId " +
-                $"where datadok>='{monthCalendar1.SelectionStart.ToString("s")}' and datadok<='{monthCalendar1.SelectionEnd.ToString("s")}' " +
-                $"order by d.datadok ,d.numer, z.idDlaRozliczen ");
+                $"where datadok>='{monthCalendar1.SelectionStart.ToString("s")}' " +
+                $"and datadok<='{monthCalendar1.SelectionEnd.ToString("s")}' " +
+                $" and zrodlo in (0,1) " +
+                $" order by d.datadok ,d.numer, z.idDlaRozliczen ");
 
            
 
