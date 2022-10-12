@@ -1,11 +1,8 @@
 ﻿using GenerateReport.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace GenerateReport
 {
@@ -15,126 +12,136 @@ namespace GenerateReport
         {
             List<RaportRow> raportRows = new List<RaportRow>();
 
-
             EmbeContext context = new EmbeContext();
             var dokumenty = context.Dokumenty.Include(dokument => dokument.Zapisy);
-            
-            foreach (var dokument in dokumenty.Where(d=>d.RokId==17).ToList())
+
+            foreach (Dokumenty dokument in dokumenty.Where(d => d.RokId == 17).ToList())
             {
-                IEnumerable<Zapisy> zapisy5 = dokument.Zapisy.Where(zapis => zapis.Synt >= 500 && zapis.Synt <= 599 && zapis.Strona == 0);
-                IEnumerable<Zapisy> zapisy4 = dokument.Zapisy.Where(zapis => zapis.Synt >= 400 && zapis.Synt <= 499 && zapis.Strona == 0);
-                var kontrahent = context.Stcontractors.FirstOrDefault(kh => kh.Id == dokument.KontrahentStalyId);
-                if (zapisy5.Count() == 1)
-                {
-                    var zapis5 = zapisy5.First();
-                    double zapisy4KwotaSum = zapisy4.Sum(z => z.Kwota);
-                    Plankont konto5 = context.Plankont.FirstOrDefault(konto =>
-                            konto.Syntet == zapis5.Synt
-                            && konto.Wart1 == zapis5.Poz1
-                            && konto.Wart2 == zapis5.Poz2
-                            && konto.Wart3 == zapis5.Poz3
-                            && konto.Wart4 == zapis5.Poz4
-                            && konto.Wart5 == zapis5.Poz5
-                            && konto.RokId==zapis5.RokId);
-                   
-                    foreach (var zapis4 in zapisy4)
-                    {
-                        RaportRow rr = new RaportRow();
-                        rr.Okres = dokument.Okres.Value;
-                        rr.Typdokumentu = dokument.Skrot;
-                        rr.Numerewidencyjny = dokument.Numer;
-                        rr.Numerdokumentu = dokument.Nazwa;
-                        rr.Kontokalkulacyjne5 = $"{zapis5.Synt}-{zapis5.Poz1}-{zapis5.Poz2}-{zapis5.Poz3}-{zapis5.Poz4}-{zapis5.Poz5}";
-                        
-                        rr.Nazwakontakalkulacyjnego = konto5?.Nazwa??"";
-                        rr.KwotaPLN = zapis4.Kwota / zapisy4KwotaSum * zapis5.Kwota;
-                        rr.KwotaWaluta = zapis4.Kwota / zapisy4KwotaSum * zapis5.Wkwota;
-                        rr.Waluta = zapis4.Waluta;
-                        rr.KontoKalkulacyjne4= $"{zapis4.Synt}-{zapis4.Poz1}-{zapis4.Poz2}-{zapis4.Poz3}-{zapis4.Poz4}-{zapis4.Poz5}";
-                        Plankont konto4 = context.Plankont.FirstOrDefault(konto =>
-                            konto.Syntet ==  zapis4.Synt
-                            && konto.Wart1 == zapis4.Poz1
-                            && konto.Wart2 == zapis4.Poz2
-                            && konto.Wart3 == zapis4.Poz3
-                            && konto.Wart4 == zapis4.Poz4
-                            && konto.Wart5 == zapis4.Poz5
-                            && konto.RokId==zapis4.RokId);
-
-                        rr.Nazwakontarodzajowego = konto4.Nazwa;
-                        rr.Opis = zapis4.Opis;
-                        rr.Nrkontrahenta = ""+kontrahent?.Id??"";
-                        rr.Nazwakontrahenta = kontrahent?.Name??"";
-                        //Nr kontrahenta	Nazwa kontrahenta	Data dokumentu	Data wprowadzenia
-                        rr.Datadokumentu = dokument.Datadok.ToString();
-                        rr.Datawprowadzenia= dokument.Datawpr.ToString();
-                        raportRows.Add(rr);
-
-
-
-                    }
-                }
-
-                if (zapisy5.Count()>1)
-                {
-                    var zapisy5kwotasum= zapisy5.Sum(z => z.Kwota);
-
-                    foreach (var zapis5 in zapisy5)
-                    {
-
-                        double zapisy4KwotaSum =  zapisy4.Sum(z => z.Kwota)* zapis5.Kwota/zapisy5kwotasum;
-                        Plankont konto5 = context.Plankont.FirstOrDefault(konto =>
-                                konto.Syntet == zapis5.Synt
-                                && konto.Wart1 == zapis5.Poz1
-                                && konto.Wart2 == zapis5.Poz2
-                                && konto.Wart3 == zapis5.Poz3
-                                && konto.Wart4 == zapis5.Poz4
-                                && konto.Wart5 == zapis5.Poz5
-                                && konto.RokId == zapis5.RokId);
-
-                        foreach (var zapis4 in zapisy4)
-                        {
-                            RaportRow rr = new RaportRow();
-                            rr.Okres = dokument.Okres.Value;
-                            rr.Typdokumentu = dokument.Skrot;
-                            rr.Numerewidencyjny = dokument.Numer;
-                            rr.Numerdokumentu = dokument.Nazwa;
-                            rr.Kontokalkulacyjne5 = $"{zapis5.Synt}-{zapis5.Poz1}-{zapis5.Poz2}-{zapis5.Poz3}-{zapis5.Poz4}-{zapis5.Poz5}";
-
-                            rr.Nazwakontakalkulacyjnego = konto5?.Nazwa ?? "";
-                            rr.KwotaPLN = zapis4.Kwota / zapisy4KwotaSum * zapis5.Kwota;
-                            rr.KwotaWaluta = zapis4.Kwota / zapisy4KwotaSum * zapis5.Wkwota;
-                            rr.Waluta = zapis4.Waluta;
-                            rr.KontoKalkulacyjne4 = $"{zapis4.Synt}-{zapis4.Poz1}-{zapis4.Poz2}-{zapis4.Poz3}-{zapis4.Poz4}-{zapis4.Poz5}";
-                            Plankont konto4 = context.Plankont.FirstOrDefault(konto =>
-                                konto.Syntet == zapis4.Synt
-                                && konto.Wart1 == zapis4.Poz1
-                                && konto.Wart2 == zapis4.Poz2
-                                && konto.Wart3 == zapis4.Poz3
-                                && konto.Wart4 == zapis4.Poz4
-                                && konto.Wart5 == zapis4.Poz5
-                                && konto.RokId == zapis4.RokId);
-
-                            rr.Nazwakontarodzajowego = konto4.Nazwa;
-                            rr.Opis = zapis4.Opis;
-                            rr.Nrkontrahenta = "" + kontrahent?.Id ?? "";
-                            rr.Nazwakontrahenta = kontrahent?.Name ?? "";
-                            //Nr kontrahenta	Nazwa kontrahenta	Data dokumentu	Data wprowadzenia
-                            rr.Datadokumentu = dokument.Datadok.ToString();
-                            rr.Datawprowadzenia = dokument.Datawpr.ToString();
-                            raportRows.Add(rr);
-
-
-
-                        }
-                    }
-                }
-
+                Console.WriteLine(dokument.Nazwa);
+                ProcesDokument(raportRows, context, dokument);
             }
 
-
-
-
             Console.ReadKey();
+        }
+
+        private static void ProcesDokument(List<RaportRow> raportRows, EmbeContext context, Dokumenty dokument)
+        {
+            IEnumerable<Zapisy> zapisy5 = dokument.Zapisy.Where(zapis => zapis.Synt >= 500 && zapis.Synt <= 599 && zapis.Strona == 0);
+            IEnumerable<Zapisy> zapisy4 = dokument.Zapisy.Where(zapis => zapis.Synt >= 400 && zapis.Synt <= 499 && zapis.Strona == 0);
+            var kontrahent = context.Stcontractors.FirstOrDefault(kh => kh.Id == dokument.KontrahentStalyId);
+            if (zapisy5.Count() == 1)
+            {
+                JednaPiątka(raportRows, context, dokument, zapisy5, zapisy4, kontrahent);
+            }
+
+            if (zapisy5.Count() > 1)
+            {
+                WielePiątek(raportRows, context, dokument, zapisy5, zapisy4, kontrahent);
+            }
+        }
+
+        private static void WielePiątek(List<RaportRow> raportRows, EmbeContext context, Dokumenty dokument, IEnumerable<Zapisy> zapisy5, IEnumerable<Zapisy> zapisy4, Stcontractors kontrahent)
+        {
+            var zapisy5kwotasum = zapisy5.Sum(z => z.Kwota);
+
+            foreach (var zapis5 in zapisy5)
+            {
+
+                double zapisy4KwotaSum = zapisy4.Sum(z => z.Kwota) * zapis5.Kwota / zapisy5kwotasum;
+                Plankont konto5 = context.Plankont.FirstOrDefault(konto =>
+                        konto.Syntet == zapis5.Synt
+                        && konto.Wart1 == zapis5.Poz1
+                        && konto.Wart2 == zapis5.Poz2
+                        && konto.Wart3 == zapis5.Poz3
+                        && konto.Wart4 == zapis5.Poz4
+                        && konto.Wart5 == zapis5.Poz5
+                        && konto.RokId == zapis5.RokId);
+
+                foreach (var zapis4 in zapisy4)
+                {
+                    RaportRow rr = new RaportRow();
+                    rr.Okres = dokument.Okres.Value;
+                    rr.Typdokumentu = dokument.Skrot;
+                    rr.Numerewidencyjny = dokument.Numer;
+                    rr.Numerdokumentu = dokument.Nazwa;
+                    rr.Kontokalkulacyjne5 = $"{zapis5.Synt}-{zapis5.Poz1}-{zapis5.Poz2}-{zapis5.Poz3}-{zapis5.Poz4}-{zapis5.Poz5}";
+
+                    rr.Nazwakontakalkulacyjnego = konto5?.Nazwa ?? "";
+                    rr.KwotaPLN = zapis4.Kwota / zapisy4KwotaSum * zapis5.Kwota;
+                    rr.KwotaWaluta = zapis4.Kwota / zapisy4KwotaSum * zapis5.Wkwota;
+                    rr.Waluta = zapis4.Waluta;
+                    rr.KontoKalkulacyjne4 = $"{zapis4.Synt}-{zapis4.Poz1}-{zapis4.Poz2}-{zapis4.Poz3}-{zapis4.Poz4}-{zapis4.Poz5}";
+                    Plankont konto4 = context.Plankont.FirstOrDefault(konto =>
+                        konto.Syntet == zapis4.Synt
+                        && konto.Wart1 == zapis4.Poz1
+                        && konto.Wart2 == zapis4.Poz2
+                        && konto.Wart3 == zapis4.Poz3
+                        && konto.Wart4 == zapis4.Poz4
+                        && konto.Wart5 == zapis4.Poz5
+                        && konto.RokId == zapis4.RokId);
+
+                    rr.Nazwakontarodzajowego = konto4.Nazwa;
+                    rr.Opis = zapis4.Opis;
+                    rr.Nrkontrahenta = "" + kontrahent?.Id ?? "";
+                    rr.Nazwakontrahenta = kontrahent?.Name ?? "";
+                    rr.Datadokumentu = dokument.Datadok.ToString();
+                    rr.Datawprowadzenia = dokument.Datawpr.ToString();
+                    raportRows.Add(rr);
+
+
+
+                }
+            }
+        }
+
+        private static void JednaPiątka(List<RaportRow> raportRows, EmbeContext context, Dokumenty dokument, IEnumerable<Zapisy> zapisy5, IEnumerable<Zapisy> zapisy4, Stcontractors kontrahent)
+        {
+            var zapis5 = zapisy5.First();
+            double zapisy4KwotaSum = zapisy4.Sum(z => z.Kwota);
+            Plankont konto5 = context.Plankont.FirstOrDefault(konto =>
+                    konto.Syntet == zapis5.Synt
+                    && konto.Wart1 == zapis5.Poz1
+                    && konto.Wart2 == zapis5.Poz2
+                    && konto.Wart3 == zapis5.Poz3
+                    && konto.Wart4 == zapis5.Poz4
+                    && konto.Wart5 == zapis5.Poz5
+                    && konto.RokId == zapis5.RokId);
+
+            foreach (var zapis4 in zapisy4)
+            {
+                RaportRow rr = new RaportRow();
+                rr.Okres = dokument.Okres.Value;
+                rr.Typdokumentu = dokument.Skrot;
+                rr.Numerewidencyjny = dokument.Numer;
+                rr.Numerdokumentu = dokument.Nazwa;
+                rr.Kontokalkulacyjne5 = $"{zapis5.Synt}-{zapis5.Poz1}-{zapis5.Poz2}-{zapis5.Poz3}-{zapis5.Poz4}-{zapis5.Poz5}";
+
+                rr.Nazwakontakalkulacyjnego = konto5?.Nazwa ?? "";
+                rr.KwotaPLN = zapis4.Kwota / zapisy4KwotaSum * zapis5.Kwota;
+                rr.KwotaWaluta = zapis4.Kwota / zapisy4KwotaSum * zapis5.Wkwota;
+                rr.Waluta = zapis4.Waluta;
+                rr.KontoKalkulacyjne4 = $"{zapis4.Synt}-{zapis4.Poz1}-{zapis4.Poz2}-{zapis4.Poz3}-{zapis4.Poz4}-{zapis4.Poz5}";
+                Plankont konto4 = context.Plankont.FirstOrDefault(konto =>
+                    konto.Syntet == zapis4.Synt
+                    && konto.Wart1 == zapis4.Poz1
+                    && konto.Wart2 == zapis4.Poz2
+                    && konto.Wart3 == zapis4.Poz3
+                    && konto.Wart4 == zapis4.Poz4
+                    && konto.Wart5 == zapis4.Poz5
+                    && konto.RokId == zapis4.RokId);
+
+                rr.Nazwakontarodzajowego = konto4.Nazwa;
+                rr.Opis = zapis4.Opis;
+                rr.Nrkontrahenta = "" + kontrahent?.Id ?? "";
+                rr.Nazwakontrahenta = kontrahent?.Name ?? "";
+                //Nr kontrahenta	Nazwa kontrahenta	Data dokumentu	Data wprowadzenia
+                rr.Datadokumentu = dokument.Datadok.ToString();
+                rr.Datawprowadzenia = dokument.Datawpr.ToString();
+                raportRows.Add(rr);
+
+
+
+            }
         }
     }
 
