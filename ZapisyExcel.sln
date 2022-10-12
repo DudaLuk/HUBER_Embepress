@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZapisyExcel", "ZapisyExcel\ZapisyExcel.csproj", "{AB3B6F03-9EC1-4D81-B981-FEA15CD23844}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateReport", "GenerateReport\GenerateReport.csproj", "{8DF52DA8-E206-48D1-AF8E-DBEF042E8030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AB3B6F03-9EC1-4D81-B981-FEA15CD23844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB3B6F03-9EC1-4D81-B981-FEA15CD23844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB3B6F03-9EC1-4D81-B981-FEA15CD23844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF52DA8-E206-48D1-AF8E-DBEF042E8030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF52DA8-E206-48D1-AF8E-DBEF042E8030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF52DA8-E206-48D1-AF8E-DBEF042E8030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF52DA8-E206-48D1-AF8E-DBEF042E8030}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
