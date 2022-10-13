@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ArrayToExcel;
+using System.IO;
 
 namespace GenerateReport
 {
@@ -17,15 +19,16 @@ namespace GenerateReport
 
             foreach (Dokumenty dokument in dokumenty.Where(d => d.RokId == 17).ToList())
             {
-                Console.WriteLine(dokument.Nazwa);
                 ProcesDokument(raportRows, context, dokument);
             }
-
+            
+            File.WriteAllBytes($@"test.xlsx".ToLower(),raportRows.ToExcel());
             Console.ReadKey();
         }
 
         private static void ProcesDokument(List<RaportRow> raportRows, EmbeContext context, Dokumenty dokument)
         {
+            Console.WriteLine(dokument.Nazwa);
             IEnumerable<Zapisy> zapisy5 = dokument.Zapisy.Where(zapis => zapis.Synt >= 500 && zapis.Synt <= 599 && zapis.Strona == 0);
             IEnumerable<Zapisy> zapisy4 = dokument.Zapisy.Where(zapis => zapis.Synt >= 400 && zapis.Synt <= 499 && zapis.Strona == 0);
             var kontrahent = context.Stcontractors.FirstOrDefault(kh => kh.Id == dokument.KontrahentStalyId);
