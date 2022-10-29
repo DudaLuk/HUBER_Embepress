@@ -6,27 +6,34 @@ using System.Linq;
 using ArrayToExcel;
 using System.IO;
 using EncryptStringSample;
+using System.Windows.Forms;
 
 namespace GenerateReport
 {
     internal class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            
+            Application.Run(new Form1());
+            
+               
+            
             //Console.WriteLine(StringCipher.Decrypt("7XfACTVUsdgKhm32AbitnF7KHTGvP+uP+csaCuNLS/SpKp4DwJ1/yTU9GIrQbjbVMcOTxh1tnZEeGYUpxWGIuZ4PqL+5pYGQsQyYT8/tC1D8vek7o8VdzXTtkNRBbCkKgVNC0SvrYb8Xumn2hHPC1SxbG9/IKrGDqqutYxKN3h/CqtcDMRA4q7UmoLtj6UXHwD58AOLgcNNJ3WAi2ZUnaw==", "zaq1@WSX"));
 
-            List<RaportRow> raportRows = new List<RaportRow>();
+            //List<RaportRow> raportRows = new List<RaportRow>();
 
-            EmbeContext context = new EmbeContext();
-            var dokumenty = context.Dokumenty.Include(dokument => dokument.Zapisy);
+            //EmbeContext context = new EmbeContext();
+            //var dokumenty = context.Dokumenty.Include(dokument => dokument.Zapisy);
 
-            foreach (Dokumenty dokument in dokumenty.Where(d => d.RokId == 1).ToList())
-            {
-                ProcesDokument(raportRows, context, dokument);
-            }
+            //foreach (Dokumenty dokument in dokumenty.Where(d => d.RokId == 1).ToList())
+            //{
+            //    ProcesDokument(raportRows, context, dokument);
+            //}
 
-            File.WriteAllBytes($@"test.xlsx".ToLower(), raportRows.ToExcel());
-            Console.ReadKey();
+            //File.WriteAllBytes($@"test.xlsx".ToLower(), raportRows.ToExcel());
+            //Console.ReadKey();
         }
 
         private static void ProcesDokument(List<RaportRow> raportRows, EmbeContext context, Dokumenty dokument)
@@ -152,26 +159,24 @@ namespace GenerateReport
     }
 
 
-
-
     public class RaportRow
     {
-        public short Okres;
-        public string Typdokumentu;
-        public int Numerewidencyjny;
-        public string Numerdokumentu;
-        public string Kontokalkulacyjne5;
-        public string Nazwakontakalkulacyjnego;
-        public double KwotaWaluta;
-        public string Waluta;
-        public double KwotaPLN;
-        public string KontoKalkulacyjne4;
-        public string Nazwakontarodzajowego;
-        public string Opis;
-        public string Nrkontrahenta;
-        public string Nazwakontrahenta;
-        public string Datadokumentu;
-        public string Datawprowadzenia;
+        public short Okres { get; set; }
+        public string Typdokumentu { get; set; }
+        public int Numerewidencyjny{ get; set; }
+        public string Numerdokumentu{ get; set; }
+        public string Kontokalkulacyjne5{ get; set; }
+        public string Nazwakontakalkulacyjnego{ get; set; }
+        public double KwotaWaluta{ get; set; }
+        public string Waluta{ get; set; }
+        public double KwotaPLN{ get; set; }
+        public string KontoKalkulacyjne4{ get; set; }
+        public string Nazwakontarodzajowego{ get; set; }
+        public string Opis{ get; set; }
+        public string Nrkontrahenta{ get; set; }
+        public string Nazwakontrahenta{ get; set; }
+        public string Datadokumentu{ get; set; }
+        public string Datawprowadzenia{ get; set; }
     }
 
 }
