@@ -35,7 +35,8 @@ namespace GenerateReport.Models
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 //optionsBuilder.UseSqlServer("Server=.;Database=Embe;Trusted_Connection=True;");
                 //
-                optionsBuilder.UseSqlServer("Server=172.17.2.116;Database=F_H_MEBLOHURT_Sylwester_Lalak_50C;user=sa;password=P@r@n0j@");
+
+                optionsBuilder.UseSqlServer(@"Data Source=MB-APP1\SAGEPL;Initial Catalog=plic;Integrated Security=True");
             }
         }
 
