@@ -1,8 +1,10 @@
-﻿namespace GenerateReport
+﻿using System;
+
+namespace GenerateReport
 {
     public class RaportRow
     {
-        public short Okres { get; set; }
+        public int Okres { get; set; }
         public string Typdokumentu { get; set; }
         public int Numerewidencyjny{ get; set; }
         public string Numerdokumentu{ get; set; }
@@ -16,8 +18,8 @@
         public string Opis{ get; set; }
         public string Nrkontrahenta{ get; set; }
         public string Nazwakontrahenta{ get; set; }
-        public string Datadokumentu{ get; set; }
-        public string Datawprowadzenia{ get; set; }
+        public DateTime? Datadokumentu{ get; set; }
+        public DateTime Datawprowadzenia { get; set; }
     }
 
 }

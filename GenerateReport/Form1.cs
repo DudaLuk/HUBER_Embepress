@@ -70,7 +70,7 @@ namespace GenerateReport
                        && konto.RokId == z5.RokId);
 
                         RaportRow raportRow = new RaportRow();
-                        raportRow.Okres = dokument.Okres.Value;
+                        raportRow.Okres = dokument.Dataokr.HasValue ? dokument.Dataokr.Value.Month:0;
                         raportRow.Typdokumentu = dokument.Skrot;
                         raportRow.Numerewidencyjny = dokument.Numer;
                         raportRow.Numerdokumentu = dokument.Nazwa;
@@ -103,8 +103,8 @@ namespace GenerateReport
                         raportRow.Nazwakontrahenta = kontrahent?.Name ?? "";
 
 
-                        raportRow.Datadokumentu = dokument.Datadok.ToString();
-                        raportRow.Datawprowadzenia = dokument.Datawpr.ToString();
+                        raportRow.Datadokumentu = dokument.Datadok;
+                        raportRow.Datawprowadzenia = dokument.Datawpr;
                         return raportRow;
                     }
                 )
@@ -114,14 +114,9 @@ namespace GenerateReport
 
             }
 
-            //bindingSource1.DataSource = data;
-            //dataGridView1.DataSource = bindingSource1;
-            //dataGridView1.Refresh();
+            
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = raportRows;
-            //raportRowBindingSource.DataSource = raportRows;
-            //dataGridView1.AutoGenerateColumns = true;
-            //dataGridView1.DataSource = raportRowBindingSource;
             dataGridView1.Refresh();
         }
 
@@ -134,7 +129,7 @@ namespace GenerateReport
         {
             
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "*.xlsx";
+            saveFileDialog.Filter = "Excel Files | *.xlsx";
             if (saveFileDialog.ShowDialog()==DialogResult.OK)
             {
                 File.WriteAllBytes(saveFileDialog.FileName, (dataGridView1.DataSource as List<RaportRow>).ToExcel());
