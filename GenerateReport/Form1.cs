@@ -24,7 +24,7 @@ namespace GenerateReport
             {
                 List<Frok> froks = cx.Frok.ToList();
                 comboBox1.DataSource = froks;
-                comboBox1.SelectedIndex = comboBox1.Items.Count-1;
+                comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
             }
             GetData();
 
@@ -35,7 +35,7 @@ namespace GenerateReport
             EmbeContext cx = new EmbeContext();
             List<RaportRow> raportRows = new List<RaportRow>();
             short rokId = (comboBox1.SelectedItem as Frok).RokId;
-            foreach (var dokument in cx.Dokumenty.Include(d => d.Zapisy).Where(d => d.RokId ==rokId ).ToList())
+            foreach (var dokument in cx.Dokumenty.Include(d => d.Zapisy).Where(d => d.RokId == rokId && d.Numer != 0).ToList())
             {
                 var zapisy4 = dokument.Zapisy.Where(zapis => zapis.Synt >= 400 && zapis.Synt <= 499 && zapis.Strona == 0);
                 IEnumerable<IGrouping<string, Zapisy>> group4 = zapisy4.GroupBy(z => $"{z.Synt}-{z.Poz1}");
@@ -70,7 +70,7 @@ namespace GenerateReport
                        && konto.RokId == z5.RokId);
 
                         RaportRow raportRow = new RaportRow();
-                        raportRow.Okres = dokument.Dataokr.HasValue ? dokument.Dataokr.Value.Month:0;
+                        raportRow.Okres = dokument.Dataokr.HasValue ? dokument.Dataokr.Value.Month : 0;
                         raportRow.Typdokumentu = dokument.Skrot;
                         raportRow.Numerewidencyjny = dokument.Numer;
                         raportRow.Numerdokumentu = dokument.Nazwa;
@@ -114,7 +114,7 @@ namespace GenerateReport
 
             }
 
-            
+
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = raportRows;
             dataGridView1.Refresh();
@@ -127,10 +127,10 @@ namespace GenerateReport
 
         private void excel_Click(object sender, EventArgs e)
         {
-            
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Excel Files | *.xlsx";
-            if (saveFileDialog.ShowDialog()==DialogResult.OK)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllBytes(saveFileDialog.FileName, (dataGridView1.DataSource as List<RaportRow>).ToExcel());
             }
