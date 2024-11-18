@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -33,10 +33,21 @@ namespace GenerateReport.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=.;Database=embe;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=.;Database=Symfonia2024_1_a;Trusted_Connection=True;");
                 //
 
-                optionsBuilder.UseSqlServer(@"Data Source=MB-APP1\SAGEPL;Initial Catalog=plic;Integrated Security=True");
+                //optionsBuilder.UseSqlServer(@"Data Source=MB-APP1\SAGEPL;Initial Catalog=plic;Integrated Security=True");
+                optionsBuilder.UseSqlServer(@"Data Source=SV-KSG-SQL1.plic.local,1435;Initial Catalog=sym_plic;Integrated Security=True");
+                /*
+                 Dzień dobry Panie Łukaszu,
+
+Potrzebuję Pana pomocy odnośnie raportu po MPK, zmieniliśmy serwer. Takie dane dostałam z IT
+
+Proszę kontaktować się z Huber nowy serwer sql: SV-KSG-SQL1.PLIC.LOCAL\SYMFONIA lub SV-KSG-SQL1.plic.local port 1435
+
+Docelowo będzie zmieniany na SV-KSG-SQL2.PLIC.LOCAL.
+
+                 */
             }
         }
 
@@ -226,10 +237,10 @@ namespace GenerateReport.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.NumberKsef)
-                    .HasColumnName("numberKsef")
-                    .HasMaxLength(38)
-                    .IsUnicode(false);
+                //entity.Property(e => e.NumberKsef)
+                //    .HasColumnName("numberKsef")
+                //    .HasMaxLength(38)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.Numer).HasColumnName("numer");
 

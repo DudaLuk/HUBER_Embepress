@@ -74,7 +74,7 @@ namespace GenerateReport.Models
         public DateTime? Dataodprawy { get; set; }
         public short StatusKsef { get; set; }
         public Guid? GuidEarch { get; set; }
-        public string NumberKsef { get; set; }
+        //public string NumberKsef { get; set; }
 
         public virtual Frok Rok { get; set; }
         public virtual Kursy TabelaNavigation { get; set; }
