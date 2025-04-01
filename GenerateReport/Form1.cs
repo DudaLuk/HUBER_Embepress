@@ -80,7 +80,7 @@ namespace GenerateReport
                         raportRow.Kontokalkulacyjne5 += z5.Poz3 == 0 ? "" : "-" + z5.Poz3 + "";
                         raportRow.Kontokalkulacyjne5 += z5.Poz4 == 0 ? "" : "-" + z5.Poz4 + "";
                         raportRow.Kontokalkulacyjne5 += z5.Poz5 == 0 ? "" : "-" + z5.Poz5 + "";
-                        raportRow.Nazwakontakalkulacyjnego = konto5.Nazwa;
+                        raportRow.Nazwakontakalkulacyjnego = konto5?.Nazwa ?? "Brak nazwy";
                         raportRow.KwotaPLN = suma * (g4.Sum(x => x.Kwota) / suma4);
                         if (wsuma4 != 0)
                         {
